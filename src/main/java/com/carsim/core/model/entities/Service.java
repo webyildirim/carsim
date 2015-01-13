@@ -34,7 +34,11 @@ public class Service extends BaseEntity
     private boolean isVatIncluded;
     private Currency currency;
 
+
+    @OneToMany(targetEntity = ServiceContent.class, mappedBy="service", fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
     private Collection<ServiceContent> contents;
+
+    @OneToMany(targetEntity = ServicePrice.class, mappedBy="service", fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
     private Collection<ServicePrice> prices;
     
     //0: Active, 1: SoldOut, 2: NotInStock
@@ -224,10 +228,6 @@ public class Service extends BaseEntity
     {
         this.contents = contents;
     }
-
-    @OneToMany(targetEntity = ServiceContent.class, fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "SERVICEID")
     public Collection<ServiceContent> getContents()
     {
         return contents;
@@ -237,10 +237,6 @@ public class Service extends BaseEntity
 		return prices;
 	}
 
-
-    @OneToMany(targetEntity = ServiceContent.class, fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "SERVICEID")
 	public void setPrices(Collection<ServicePrice> prices) {
 		this.prices = prices;
 	}

@@ -3,6 +3,7 @@ package com.carsim.core.model.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.structure.BaseEntity;
 
@@ -15,6 +16,8 @@ public class ServicePrice extends BaseEntity{
 	private String code;
 	private String feature;
 	private double price;
+	@ManyToOne
+	private Service service;
 
     public ServicePrice()
     {

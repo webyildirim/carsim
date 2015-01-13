@@ -23,6 +23,9 @@ public class OrderDetail extends BaseEntity
     private double calculatedPrice;
     private Currency currency;
     private Comment comment;
+    
+    @ManyToOne
+    private Order order;
 
     public OrderDetail()
     {
@@ -37,7 +40,19 @@ public class OrderDetail extends BaseEntity
         this.id = id;
     }
 
-    public void setService(Service service)
+    public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setService(Service service)
     {
         this.service = service;
     }

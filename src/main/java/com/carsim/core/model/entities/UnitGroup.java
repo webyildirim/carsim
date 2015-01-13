@@ -13,18 +13,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.structure.BaseEntity;
 
 
-@Entity(name = "UnitGroup")
+@Entity
 public class UnitGroup extends BaseEntity
 {
 	@Id @GeneratedValue
     private Long id;
     private String name;
+    @OneToMany(targetEntity = Unit.class, mappedBy="unitGroup", fetch = (FetchType.LAZY), cascade = { CascadeType.ALL })
     private Collection<Unit> units;
 
     public static String WEIGHT = "WEIGHT";
@@ -33,18 +33,18 @@ public class UnitGroup extends BaseEntity
     public static String DISTANCE = "DISTANCE";
     public static String LIQUID = "LIQUID";
 
-    public static HashMap<String, Integer> unitGroups;
-
-    static
-    {
-        unitGroups = new HashMap<String, Integer>();
-
-        unitGroups.put(WEIGHT, 0);
-        unitGroups.put(COUNTABLE, 1);
-        unitGroups.put(TIME, 2);
-        unitGroups.put(DISTANCE, 3);
-        unitGroups.put(LIQUID, 4);
-    }
+//    public static HashMap<String, Integer> unitGroups;
+//
+//    static
+//    {
+//        unitGroups = new HashMap<String, Integer>();
+//
+//        unitGroups.put(WEIGHT, 0);
+//        unitGroups.put(COUNTABLE, 1);
+//        unitGroups.put(TIME, 2);
+//        unitGroups.put(DISTANCE, 3);
+//        unitGroups.put(LIQUID, 4);
+//    }
 
     public UnitGroup()
     {
@@ -80,9 +80,6 @@ public class UnitGroup extends BaseEntity
         this.name = name;
     }
 
-    @OneToMany(targetEntity = Unit.class, fetch = (FetchType.LAZY), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "UNITGROUPID")
     public Collection<Unit> getUnits()
     {
         return units;

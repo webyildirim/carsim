@@ -1,9 +1,6 @@
 package com.carsim.core.model.entities;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,8 +12,6 @@ import com.structure.BaseEntity;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "CONTENTTYPE", discriminatorType = DiscriminatorType.STRING, length = 30)
-@DiscriminatorValue("Content")
 public class Content extends BaseEntity
 {
 	@Id @GeneratedValue
@@ -24,8 +19,7 @@ public class Content extends BaseEntity
     private String extension;
     private String name;
     private String path;
-    private String contentType;
-    private int type;
+    private int contentType;
 
     public final static int TYPE_IMAGE = 0;
     public final static int TYPE_TEXT = 1;
@@ -39,7 +33,7 @@ public class Content extends BaseEntity
     public Content()
     {
         this.entityName = "Content";
-        setContentType(getEntityName());
+        setContentType(TYPE_IMAGE);
     }
 
     public Long getId() {
@@ -72,28 +66,6 @@ public class Content extends BaseEntity
         return path;
     }
 
-    public void setContentType(String contentType)
-    {
-        this.contentType = contentType;
-    }
-
-    @Column(name = "CONTENTTYPE")
-    public String getContentType()
-    {
-        return contentType;
-    }
-
-    public void setType(int type)
-    {
-        this.type = type;
-    }
-
-    @Column(name = "TYPE")
-    public int getType()
-    {
-        return type;
-    }
-
     public void setExtension(String extension)
     {
         this.extension = extension;
@@ -105,7 +77,15 @@ public class Content extends BaseEntity
         return extension;
     }
 
-    @Override
+    public int getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(int contentType) {
+		this.contentType = contentType;
+	}
+
+	@Override
     public String toString()
     {
         return "" + getId();

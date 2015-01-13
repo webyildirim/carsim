@@ -3,9 +3,6 @@ package com.carsim.core.model.entities;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,8 +18,6 @@ import com.structure.BaseEntity;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "USERTYPE", discriminatorType = DiscriminatorType.STRING, length = 30)
-@DiscriminatorValue("User")
 public class Account extends BaseEntity{
     @Id @GeneratedValue
     private Long id;
@@ -35,18 +30,9 @@ public class Account extends BaseEntity{
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLogin;
 	private boolean passive;
-    private String userType;
 
 	public Account() {
 		this.entityName="Account";
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
 	}
 
 	@Column(nullable=false,unique=true)

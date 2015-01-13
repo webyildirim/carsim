@@ -2,21 +2,19 @@ package com.carsim.core.model.entities;
 
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.ManyToOne;
 
-@Entity(name = "ServiceContent")
-@DiscriminatorValue("ServiceContent")
-@PrimaryKeyJoinColumn(name = "CONTENTID", referencedColumnName = "ID")
+@Entity
 public class ServiceContent extends Content
 {
+	@ManyToOne
+	private Service service;
     private boolean defaultContent;
 
     public ServiceContent()
     {
         this.entityName = "ServiceContent";
-        setContentType(getEntityName());
     }
 
     public void setDefaultContent(boolean defaultContent)
@@ -30,7 +28,15 @@ public class ServiceContent extends Content
         return defaultContent;
     }
 
-    @Override
+    public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
+
+	@Override
     public String toString()
     {
         return "" + getId();

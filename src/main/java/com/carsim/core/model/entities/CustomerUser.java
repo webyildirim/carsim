@@ -6,43 +6,44 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
 @Entity
-@DiscriminatorValue("CustomerUser")
-@PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
 public class CustomerUser extends Account
 {
+    @OneToMany(targetEntity = DeliveryAddress.class,mappedBy="customerUser", fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
     private Collection<DeliveryAddress> deliveryAddresses;
-    private Collection<Contact> contacts;
     private Date dateOfBirth;
     private int maritalStatus;
     private int gender;
+    private String phone;
 
     public CustomerUser()
     {
         entityName = "CustomerUser";
-        setUserType(this.getEntityName());
         setPassive(true);
         deliveryAddresses = new ArrayList<DeliveryAddress>();
     }
 
-    public void setDeliveryAddresses(Collection<DeliveryAddress> deliveryAddresses)
+    public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setDeliveryAddresses(Collection<DeliveryAddress> deliveryAddresses)
     {
         this.deliveryAddresses = deliveryAddresses;
     }
 
-    @OneToMany(targetEntity = DeliveryAddress.class, fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "CUSTOMERUSERID")
     public Collection<DeliveryAddress> getDeliveryAddresses()
     {
         return deliveryAddresses;
@@ -58,19 +59,6 @@ public class CustomerUser extends Account
     public Date getDateOfBirth()
     {
         return dateOfBirth;
-    }
-
-    public void setContacts(Collection<Contact> contacts)
-    {
-        this.contacts = contacts;
-    }
-    
-    @OneToMany(targetEntity = Contact.class, fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "CUSTOMERUSERID")
-    public Collection<Contact> getContacts()
-    {
-        return contacts;
     }
 
     public void setMaritalStatus(int maritalStatus)

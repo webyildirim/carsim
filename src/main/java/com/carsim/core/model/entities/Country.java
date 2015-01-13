@@ -4,13 +4,13 @@ package com.carsim.core.model.entities;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+
 import com.structure.BaseEntity;
 
 
@@ -22,6 +22,7 @@ public class Country extends BaseEntity
     private String code;
     private String name;
     private String internationalName;
+    @OneToMany(targetEntity = City.class, mappedBy = "country", fetch = FetchType.EAGER)
     private Collection<City> cities;
 
     public Country()
@@ -76,9 +77,6 @@ public class Country extends BaseEntity
         this.cities = cities;
     }
 
-    @OneToMany(targetEntity = City.class, cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "COUNTRYID")
     public Collection<City> getCities()
     {
         return cities;

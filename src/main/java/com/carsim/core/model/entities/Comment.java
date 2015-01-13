@@ -1,21 +1,13 @@
 package com.carsim.core.model.entities;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 
 import com.structure.BaseEntity;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "COMMENTTYPE", discriminatorType = DiscriminatorType.STRING, length = 30)
-@DiscriminatorValue("Comment")
 public class Comment extends BaseEntity
 {
 	@Id @GeneratedValue
@@ -25,12 +17,10 @@ public class Comment extends BaseEntity
     private boolean ratedGood;
     private boolean ratedExcellent;
     private String detail;
-    private String commentType;
 
     public Comment()
     {
         entityName = "Comment";
-        setCommentType(this.getEntityName());
     }
 
     public Long getId() {
@@ -96,20 +86,9 @@ public class Comment extends BaseEntity
         this.detail = detail;
     }
 
-    public void setCommentType(String commentType)
-    {
-        this.commentType = commentType;
-    }
-
-    @Column(name = "COMMENTTYPE", length = 30)
-    public String getCommentType()
-    {
-        return commentType;
-    }
-
     @Override
     public String toString()
     {
-        return getCommentType() + " - " + getId();
+        return ""+getId();
     }
 }

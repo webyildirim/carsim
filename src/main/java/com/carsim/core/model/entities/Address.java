@@ -2,9 +2,6 @@ package com.carsim.core.model.entities;
 
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,8 +14,6 @@ import com.structure.BaseEntity;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "ADDRESSTYPE", discriminatorType = DiscriminatorType.STRING, length = 30)
-@DiscriminatorValue("Address")
 public class Address extends BaseEntity
 {   
 	@Id @GeneratedValue
@@ -29,7 +24,7 @@ public class Address extends BaseEntity
     private City city; //þehir
     private Country country;
     private String zip; //posta kodu
-    private String addressType;
+    
     //google map integration
     private String latitude;
     private String longitude;
@@ -37,7 +32,6 @@ public class Address extends BaseEntity
     public Address()
     {
         entityName = "Address";
-        setAddressType(getEntityName());
     }
     
     public String getLatitude() {
@@ -107,17 +101,6 @@ public class Address extends BaseEntity
     public void setCountry(Country country)
     {
         this.country = country;
-    }
-
-    public void setAddressType(String addressType)
-    {
-        this.addressType = addressType;
-    }
-
-    @Column(name = "DISTRICT", length = 30)
-    public String getAddressType()
-    {
-        return addressType;
     }
 
     public void setDistrict(District district)

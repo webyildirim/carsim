@@ -21,8 +21,6 @@ public class JpaServiceContentRepo implements ServiceContentRepo {
     @PersistenceContext
     private EntityManager manager;
     
-    private MainDao ServiceContent=null;
-    
     private MainDao dao=null;
     
     public JpaServiceContentRepo() {

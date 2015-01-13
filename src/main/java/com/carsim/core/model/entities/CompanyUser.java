@@ -4,18 +4,14 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
 @Entity
-@DiscriminatorValue("CompanyUser")
-@PrimaryKeyJoinColumn(name = "USERID", referencedColumnName = "ID")
 public class CompanyUser extends Account
 {
 	private Company company;
@@ -25,7 +21,6 @@ public class CompanyUser extends Account
     public CompanyUser()
     {
         entityName = "CompanyUser";
-        setUserType(this.getEntityName());
         setPassive(true);
     }
 

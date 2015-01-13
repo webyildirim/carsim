@@ -66,13 +66,4 @@ public class JpaCustomerUserRepo implements CustomerUserRepo {
     	else
     		return new ArrayList();
     }
-
-    @Override
-    public Collection<Contact> findContacts(Long customerUserId) throws Exception {
-    	CustomerUser entity=findCustomerUser(customerUserId);
-    	if(entity!=null)
-    		return entity.getContacts();
-    	else
-    		return new ArrayList();
-    }
 }

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.structure.BaseEntity;
 
@@ -14,6 +15,8 @@ public class District extends BaseEntity
     private Long id;
     private String name;
     private String internationalName;
+    @ManyToOne
+    private City city;
 
     public District()
     {
@@ -58,7 +61,15 @@ public class District extends BaseEntity
         return internationalName;
     }
 
-    @Override
+    public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	@Override
     public String toString()
     {
         return getName();

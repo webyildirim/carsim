@@ -1,24 +1,31 @@
 package com.carsim.core.model.entities;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-@DiscriminatorValue("DeliveryAddress")
-@PrimaryKeyJoinColumn(name = "ADDRESSID", referencedColumnName = "ID")
 public class DeliveryAddress extends Address
 {
     private String direction;
     private boolean defaultAddress;
     
+    @ManyToOne
+    private CustomerUser customerUser;
+    
     public DeliveryAddress()
     {
         entityName = "DeliveryAddress";
-        setAddressType(this.getEntityName());
     }
 
-    public boolean isDefaultAddress() {
+    public CustomerUser getCustomerUser() {
+		return customerUser;
+	}
+
+	public void setCustomerUser(CustomerUser customerUser) {
+		this.customerUser = customerUser;
+	}
+
+	public boolean isDefaultAddress() {
 		return defaultAddress;
 	}
 

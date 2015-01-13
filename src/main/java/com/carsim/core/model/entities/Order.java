@@ -33,6 +33,8 @@ public class Order extends BaseEntity
     private CustomerUser customer;
     private Company company;
 
+
+    @OneToMany(targetEntity = OrderDetail.class, mappedBy="order", fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
     private Collection<OrderDetail> details;
 
     //0: creating, 1:standing, 2: completed, 3:cancelled
@@ -73,10 +75,7 @@ public class Order extends BaseEntity
     {
         this.details = details;
     }
-
-    @OneToMany(targetEntity = OrderDetail.class, fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "ORDERID")
+    
     public Collection<OrderDetail> getDetails()
     {
         return details;

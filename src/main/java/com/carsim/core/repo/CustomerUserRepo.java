@@ -20,6 +20,4 @@ public interface CustomerUserRepo {
     public CustomerUser deleteCustomerUser(Long id) throws Exception;
     
     public Collection<DeliveryAddress> findDeliveryAddress(Long customerUserId) throws Exception; 
-    
-    public Collection<Contact> findContacts(Long customerUserId) throws Exception;
 }

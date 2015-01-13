@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.structure.BaseEntity;
@@ -21,6 +21,9 @@ public class City extends BaseEntity
     private Long id;
     private String name;
     private String internationalName;
+    @ManyToOne
+    private Country country;
+    @OneToMany(targetEntity = District.class, mappedBy="city", cascade = { CascadeType.ALL })
     private Collection<District> districts;
 
     public City()
@@ -57,11 +60,6 @@ public class City extends BaseEntity
         return name;
     }
 
-    public void setDistricts(Collection<District> districts)
-    {
-        this.districts = districts;
-    }
-
     public void setInternationalName(String internationalName)
     {
         this.internationalName = internationalName;
@@ -73,15 +71,25 @@ public class City extends BaseEntity
         return internationalName;
     }
 
-    @OneToMany(targetEntity = District.class, cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "CITYID")
     public Collection<District> getDistricts()
     {
         return districts;
     }
 
-    @Override
+    public void setDistricts(Collection<District> districts)
+    {
+        this.districts = districts;
+    }
+
+    public Country getCountry() {
+		return country;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+	@Override
     public String toString()
     {
         return getName();

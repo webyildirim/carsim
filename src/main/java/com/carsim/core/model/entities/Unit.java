@@ -5,7 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.ManyToOne;
 
 import com.structure.BaseEntity;
 
@@ -16,7 +16,9 @@ public class Unit extends BaseEntity
     private Long id;
     private String code;
     private String name;
-    private boolean baseUnit;
+    
+    @ManyToOne
+    private UnitGroup unitGroup;
 
     public Unit()
     {
@@ -31,7 +33,15 @@ public class Unit extends BaseEntity
 		this.id = id;
 	}
 
-	@Column(name = "CODE", length = 8)
+	public UnitGroup getUnitGroup() {
+		return unitGroup;
+	}
+
+	public void setUnitGroup(UnitGroup unitGroup) {
+		this.unitGroup = unitGroup;
+	}
+
+	@Column(name = "CODE", unique=true, length = 8)
     public String getCode()
     {
         return code;
@@ -53,22 +63,10 @@ public class Unit extends BaseEntity
         this.name = name;
     }
 
-    @Column(name = "ISBASEUNIT")
-    public boolean isBaseUnit()
-    {
-        return baseUnit;
-    }
-
-    public void setBaseUnit(boolean baseUnit)
-    {
-        this.baseUnit = baseUnit;
-    }
-
     @Override
     public String toString()
     {
-        return getCode();
-        // return getCode() + "(" + getName() + ")";
+        return getCode() + "(" + getName() + ")";
     }
 
 }

@@ -2,12 +2,12 @@ package com.carsim.core.model.entities;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -21,7 +21,9 @@ public class ServiceCategory extends BaseEntity
     private Long id;
     private String name;
     private String description;
+    @OneToMany(targetEntity=ServiceCategory.class, mappedBy = "dependentCategory", fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     private Collection<ServiceCategory> subCategories;
+    @ManyToOne
     private ServiceCategory dependentCategory;
 
     public ServiceCategory()
@@ -45,7 +47,6 @@ public class ServiceCategory extends BaseEntity
 		this.id = id;
 	}
 
-    @OneToMany(mappedBy = "dependentCategory", fetch = FetchType.EAGER)
 	public Collection<ServiceCategory> getSubCategories() {
 		return subCategories;
 	}
@@ -54,8 +55,6 @@ public class ServiceCategory extends BaseEntity
 		this.subCategories = subCategories;
 	}
 	
-    @ManyToOne(targetEntity = ServiceCategory.class)
-    @JoinColumn(name = "DEPENDENTCATEGORYID")
 	public ServiceCategory getDependentCategory() {
 		return dependentCategory;
 	}

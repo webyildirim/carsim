@@ -1,6 +1,5 @@
 package com.carsim.core.model.entities;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -28,26 +27,36 @@ public class Company extends BaseEntity
     private String taxOffice;
     private String taxNo;
     private Address address;
-    private Collection<Branch> branches;
+    //private Collection<Branch> branches;
     private Currency currency;
     private String email;
 
+    @OneToMany(targetEntity = Contact.class, mappedBy="company", fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
     private Collection<Contact> contacts;
     public Company()
     {
         entityName = "Company";
-
-        this.branches = new ArrayList<Branch>();
+        //this.branches = new ArrayList<Branch>();
     }
+
+//    public void setBranches(Collection<Branch> branches)
+//    {
+//        this.branches = branches;
+//    }
+//
+//    @OneToMany(targetEntity = Branch.class, fetch = (FetchType.LAZY), cascade = { CascadeType.ALL })
+//    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
+//    @JoinColumn(name = "COMPANYID")
+//    public Collection<Branch> getBranches()
+//    {
+//        return branches;
+//    }
 
     public void setContacts(Collection<Contact> contacts)
     {
         this.contacts = contacts;
     }
     
-    @OneToMany(targetEntity = Contact.class, fetch = (FetchType.EAGER), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "COMPANYID")
     public Collection<Contact> getContacts()
     {
         return contacts;
@@ -128,19 +137,6 @@ public class Company extends BaseEntity
     public void setAddress(Address address)
     {
         this.address = address;
-    }
-
-    public void setBranches(Collection<Branch> branches)
-    {
-        this.branches = branches;
-    }
-
-    @OneToMany(targetEntity = Branch.class, fetch = (FetchType.LAZY), cascade = { CascadeType.ALL })
-    @org.hibernate.annotations.Cascade( { org.hibernate.annotations.CascadeType.DELETE_ORPHAN })
-    @JoinColumn(name = "COMPANYID")
-    public Collection<Branch> getBranches()
-    {
-        return branches;
     }
 
     public void setCurrency(Currency currency)

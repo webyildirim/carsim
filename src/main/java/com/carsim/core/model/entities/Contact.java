@@ -2,14 +2,10 @@ package com.carsim.core.model.entities;
 
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 
 import com.structure.BaseEntity;
 
@@ -21,6 +17,8 @@ public class Contact extends BaseEntity
     // 1:telephone, 2:email 3:fax 4:web
     private int type;
     private String value;
+    @ManyToOne
+    private Company company;
 
     public static final int TYPE_TELEPHONE = 0;
     public static final int TYPE_EMAIL = 1;
@@ -38,6 +36,14 @@ public class Contact extends BaseEntity
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	@Column(name = "TYPE")
